@@ -211,7 +211,7 @@ body{
 .contents .sprite_more_icon.on .toggle_box{
     display: block;
     background-color: white;
-    
+    width:20px;
     list-style-type:none;
     border-radius: 5px;
 }
@@ -225,8 +225,8 @@ body{
 
 .contents .toggle_box > li input{
     border: none;
-    /* font-size: inherit; */
-    font-size: 10px;
+    font-size: inherit;
+    font-size: 15px;
 }
 
 .contents .img_section{

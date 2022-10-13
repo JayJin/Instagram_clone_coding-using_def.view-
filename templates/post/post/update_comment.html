@@ -1,4 +1,4 @@
-{% extends "post_base/base_with_header.html" %}
+{% extends "../post_base/base_with_header.html" %}
 <!-- {% block comment-update-style %}
 
     <style>
@@ -9,22 +9,19 @@
 
 {% endblock %} -->
 
-{% load widget_tweaks %}
 
 {% block title %}댓글 수정 | Sparkling Coffee Club{% endblock title %}
 
 {% block content %}
     <div id="main_container">
         <div class="form_container">
-            <form class="form" method="post" style="border-radius:5px; ">
-                {% csrf_token %}                
+
+            <form class="form" style="border-radius:5px;" method="post">{% csrf_token%}            
                 <div class="sign_up_text">
                     <p style="margin:18px auto 15px auto;">댓글을 수정해주세요</p>
-                    <form class="comment-update-form"
-                          method="post">
-                          {% csrf_token %}
-                          {{ form.content|attr:"placeholder:댓글 달기... "|add_class:"cp-input" }}                    
-                    </form>
+                        <div class="comment_field" style="height: 35px; font-size : 13px;">
+                            <textarea id="content" style="width: 250px; height:50px;"name="my-comment">{{comment.comment}}</textarea>
+                        </div>
                     <br>
                     <button class="submit_btn" type="submit" style="margin-top:15px;">수정</button>
                 </div>

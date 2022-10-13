@@ -79,3 +79,16 @@ def comment_delete(request, id):
     current_post = comment.post_id
     comment.delete()
     return redirect('/comment/detail/'+str(current_post))
+
+
+@login_required
+def comment_update(request, id):
+    my_comment = CommentModel.objects.get(id=id)
+    if request.method == 'GET':
+        comment_form = PostForm(instance = my_comment)
+        return render(request, 'post/post/update_comment.html', {'comment':my_comment, 'form':comment_form})
+    elif request.method == 'POST':
+        my_comment.comment = request.POST['my-comment']
+        current_post = my_comment.post_id
+        my_comment.save()
+        return redirect('/comment/detail/'+str(current_post))

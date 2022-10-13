@@ -33,7 +33,8 @@
                             <div class="user_name">
                                 <div class="nick_name">{{post.author.username}}</div>
                                 <div class="country">{{post.author.email}}</div>
-                                <div style="margin-top:20px; word-break:break-all;word-wrap:break-word; width:250px">{{post.content }}</div>
+                                <div style="margin-top:20px; word-break:break-all;word-wrap:break-word; width:250px">
+                                    {{post.content }}</div>
                             </div>
                         </div>
                         {% if post.author == user %}
@@ -74,11 +75,11 @@
                                         <div class="sprite_more_icon" data-name="more">
                                             <ul class="toggle_box">
                                                 <li>
-                                                    <a href="#">수정</a>
+                                                    <a href="/comment/update/{{ comment.id }}">수정</a>
                                                 </li>
                                                 <li>
                                                     <a href="/comment/delete/{{ comment.id }}">삭제</a>
-                                                </li>                                                
+                                                </li>
                                             </ul>
                                         </div>
                                         {% endif %}
@@ -113,17 +114,18 @@
                         </div>
                     </div>
                     <div class="count_likes">
-                        좋아요 
+                        좋아요
                         <span class="count">{{ post.likes.count }}</span>
                         개
                     </div>
                     <div class="timer">{{ post.created_at }}</div>
-                    <form class="comment-create-form" action="/comment/write/{{ post.id }}" method="post">{% csrf_token %}
+                    <form class="comment-create-form" action="/comment/write/{{ post.id }}" method="post">{% csrf_token%}
                         <div class="comment_field" style="height: 35px; font-size : 13px;">
-                            <input id="content" name = "comment" placeholder="댓글달기..."></input>  
-                            <button type="submit" style=" border:none; background:none; float:right; font-size:13px; color:skyblue;">게시</button>
+                            <input id="content" name="comment" placeholder="댓글달기..."></input>
+                            <button type="submit"
+                                style=" border:none; background:none; float:right; font-size:13px; color:skyblue;">게시</button>
                         </div>
-                        
+
                     </form>
                 </div>
         </div>
