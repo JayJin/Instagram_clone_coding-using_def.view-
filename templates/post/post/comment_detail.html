@@ -118,15 +118,12 @@
                         개
                     </div>
                     <div class="timer">{{ post.created_at }}</div>
-                    <form class="comment-create-form" action="#" method="post">
-                        {% csrf_token %}
-                        <div class="detail_comment_field" style="height: 35px; font-size : 13px;">
-                            {% comment %} {{ form.content |attr:"placeholder:댓글
-                            달기..."|attr:"style:border:none"|attr:'style:float:left'|attr:'style:width:100%'}}
-                            {%endcomment %}
-                            <button type="submit"
-                                style=" border:none; background:none; float:right; font-size:13px; color:skyblue;">게시</button>
+                    <form class="comment-create-form" action="/comment/write/{{ post.id }}" method="post">{% csrf_token %}
+                        <div class="comment_field" style="height: 35px; font-size : 13px;">
+                            <input id="content" name = "comment" placeholder="댓글달기..."></input>  
+                            <button type="submit" style=" border:none; background:none; float:right; font-size:13px; color:skyblue;">게시</button>
                         </div>
+                        
                     </form>
                 </div>
         </div>
