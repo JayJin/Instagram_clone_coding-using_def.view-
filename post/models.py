@@ -14,4 +14,13 @@ class PostModel(models.Model):
     
     def __str__(self):
         return self.content
-    
+
+class CommentModel(models.Model):
+    class Meta:
+        db_table = "db_comment"
+        
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='comment')
+    author = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='comment')
+    comment = models.CharField(max_length=256)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

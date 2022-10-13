@@ -106,7 +106,7 @@
                                                 <div>{{ comment.content }}</div>
                                             </div>
                                             <div>
-                                                <a href="/comment-detail/{{ post.id }}" style="color: gray;">댓글 모두 보기</a>
+                                                <a href="/comment/detail/{{ post.id }}" style="color: gray;">댓글 모두 보기</a>
                                             </div>
                                         </div>
 
@@ -115,9 +115,9 @@
                                     <div class="timer">{{ post.created_at }}</div>
 
                                     <form
-                                        class="comment-create-form" action="#" method="post">{% csrf_token %}
+                                        class="comment-create-form" action="/comment/write/{{ post.id }}" method="post">{% csrf_token %}
                                         <div class="comment_field" style="height: 20px; font-size: 13px;">
-                                            <input id="content" name = "content" placeholder="댓글달기..."></input>
+                                            <input id="content" name = "comment" placeholder="댓글달기..."></input>
                                             <button type="submit" style=" border: none; background:none; float:right; font-size : 13px; color: skyblue">게시</button>
                                         </div>
                                     </form>

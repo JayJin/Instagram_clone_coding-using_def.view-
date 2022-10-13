@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import PostModel
+from .models import PostModel, CommentModel
 from .forms import PostForm
 
 # Create your views here.
@@ -54,8 +54,28 @@ def post_update(request, post_id):
 
 
 @login_required
-def comment_detail(request, post_id):
-    my_post = PostModel.objects.get(id=post_id)
-    # tweet_comment = TweetComment.objects.filter(tweet_id=id).order_by('created_at')
-    return render(request, 'post/post/comment_detail.html', {'post':my_post })       #'comment':post_comment
+def comment_detail(request, id):
+    my_post = PostModel.objects.get(id=id)
+    post_comment = CommentModel.objects.filter(post_id=id).order_by('created_at')
+    return render(request, 'post/post/comment_detail.html', {'post':my_post, 'comments':post_comment })       #'comment':post_comment
     
+@login_required
+def comment_write(request, id):
+    if request.method == "POST":
+        comment = request.POST.get('comment', '')
+        cur_post = PostModel.objects.get(id=id)
+        
+        my_comment = CommentModel()
+        my_comment.comment = comment
+        my_comment.post = cur_post
+        my_comment.author = request.user
+        my_comment.save()
+        return redirect('/comment/detail/'+str(id))
+
+
+@login_required
+def comment_delete(request, id):
+    comment = CommentModel.objects.get(id=id)
+    current_post = comment.post_id
+    comment.delete()
+    return redirect('/comment/detail/'+str(current_post))
