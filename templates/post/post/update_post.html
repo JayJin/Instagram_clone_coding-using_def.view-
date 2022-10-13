@@ -1,0 +1,37 @@
+{% extends "../post_base/base_with_header.html" %}
+
+
+{% block title %}
+    {{user.username}} 피드 수정 | Sparkling Coffee Club
+{% endblock title %}
+
+{% block content %}
+    <section id="container">
+        <div id="main_container">
+            <div class="post_form_container">
+                <form class="post_form" method="post" autocomplete="off" enctype="multipart/form-data" >{% csrf_token %}
+                    <div class="title">
+                        Update Post
+                    </div>
+                    <div class="preview">
+                        <div class="upload">
+                            <img src="{{post.image.url}}" style="width:100%">
+                            <canvas id="imageCanvas"></canvas>
+                        </div>
+                    </div>
+                    <p>
+                        <input type="file" name="my-image" id="id_photo" required="required">      {% comment %} required {% endcomment %}
+                    </p>
+                    <p>
+                        <textarea cols="50" rows="5"  class="content" id='text_field' name='my-content'>{{post.content}}</textarea>
+                    </p>
+                    <button class="btn btn-outline-secondary" type="submit">저장</button>
+
+                    <hr>
+                    </P>
+
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

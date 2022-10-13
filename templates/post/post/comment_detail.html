@@ -1,4 +1,4 @@
-{% extends "post_base/base_detail_with_header.html" %}
+{% extends "../post_base/base_detail_with_header.html" %}
 
 {% block post-detail-style %}
     <style>
@@ -11,7 +11,6 @@
     </style>
 {% endblock %}
 
-{% load widget_tweaks %}
 
 {% block title %}상세페이지 | Sparkling Coffee Club{% endblock title %}
 
@@ -21,15 +20,13 @@
             <div class="contents_box">
                 <article class="contents cont01">
                     <div class="img_section">
-                        <div class="trans_inner">
-                            <div><img src="{{ post.image.url }}" alt=""></div>
-                        </div>
+                        <img src="{{ post.image.url }}" style="width:100%;" alt="이미지">
                     </div>
                     <div class="detail--right_box">
                         <header class="top">
                             <div class="user_container" style="align-items:flex-start">
                                 <div class="profile_img">
-                                    <a href="{% url 'profile' post.author.id %}">
+                                    <a href="#">
                                         <img src="{{ post.author.profile_image.url }}" alt="프로필 사진">
                                     </a>
                                 </div>
@@ -43,10 +40,10 @@
                                 <div class="sprite_more_icon" data-name="more">
                                     <ul class="toggle_box">
                                         <li>
-                                            <a href="{% url 'post-update' post.id %}">수정</a>
+                                            <a href="/post-update/{{ post.id }}">수정</a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'post-delete' post.id %}">삭제</a>
+                                            <a href="/post-delete/{{ post.id }}">삭제</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -96,7 +93,7 @@
 
                                 <div class="bottom_icons">
                                     <div class="left_icons" style="width:100px; height:30px;" >
-                                        <form action="{% url 'process-like' post_ctype_id post.id %}" 
+                                        <form action="#" 
                                               method="post">
                                             {% csrf_token %}
                                             {% if post.likes.all %}
@@ -114,7 +111,7 @@
                                                     name="39"
                                                     data-name="heartbeat"></input>
                                             {% endif %}                                        
-                                            <a href="{% url 'post-detail' post.id %}">
+                                            <a href="#">
                                                 <div class="sprite_bubble_icon" style="float:right; margin-left:10px;"> </div>
                                             </a>  
                                         </form>                                        
@@ -132,11 +129,11 @@
                                 <div class="timer">{{ post.created_at }}</div>
                                 <form
                                     class="comment-create-form"
-                                    action="{% url 'comment-create' post.id %}"
+                                    action="#"
                                     method="post">
                                     {% csrf_token %}
                                     <div class="detail_comment_field" style="height: 35px; font-size : 13px;">
-                                        {{ form.content |attr:"placeholder:댓글 달기..."|attr:"style:border:none"|attr:'style:float:left'|attr:'style:width:100%'}}
+                                        {% comment %} {{ form.content |attr:"placeholder:댓글 달기..."|attr:"style:border:none"|attr:'style:float:left'|attr:'style:width:100%'}} {% endcomment %}
                                         <button
                                             type="submit"
                                             style=" border:none; background:none; float:right; font-size:13px; color:skyblue;">게시</button>
