@@ -1,0 +1,54 @@
+{% extends "../user_base/base_with_header.html" %}
+
+{% load static %}
+
+{% block title %}회원가입 | Sparkling Coffee Club{% endblock title %}
+
+{% block content %}
+    <div id="main_container">
+        <div class="form_container">
+            <form class="form-area" method="post" action="{% url 'user:sign-up' %}" >{% csrf_token %}
+                <div class="form">
+                    <div class="title_cover">
+                        <a href="#">
+                            <h1 class="sprite_insta_big_logo title"></h1>
+                        </a>
+                    </div>
+                    <div class="sign_up_text">
+                    친구들의 사진과 동영상을 보려면 가입하세요. 
+                    </div>
+                    <hr>
+                    <div class="form-group mt-2 mb-2">
+                        <label for="email"></label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
+                    </div>
+                    <div class="form-group mt-2 mb-2">
+                        <label for="username"></label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="닉네임">
+                    </div>
+                    <div class="form-group mt-2 mb-2">
+                        <label for="password"></label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="패스워드">
+                    </div>
+                    <div class="form-group mt-2 mb-2">
+                        <label for="password2"></label>
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder="패스워드 확인">
+                    </div>
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    <input type="submit" id="submit_btn" value="가입" class="submit_btn">
+                </div>
+                <div class="bottom_box">
+                    <div>
+                        <span>계정이 있으신가요?</span>
+                        <a class="sign_user_btn_color" href="/sign-in" >로그인</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

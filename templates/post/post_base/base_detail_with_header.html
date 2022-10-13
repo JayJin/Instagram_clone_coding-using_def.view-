@@ -1,0 +1,57 @@
+{% extends "./base_detail.html" %}
+{% load static %}
+{% block post-detail-style %} {% endblock %}
+{% block header %}
+
+{% if user.is_authenticated %}
+    <section id="container">
+        <header id="header">
+            <section class="inner">
+                <h1 class="logo">
+                    <a href="{% url 'index' %}">
+                        <div class="sprite_write_logo"></div>
+                    </a>
+                </h1>
+                <form action="{% url 'search' %}" method="get">
+                    <div class="search_box">
+                        <input name="query" type="text" placeholder="검색" id="search-field" >
+                        <div class="fake_field">
+                            <span class="sprite_small_search_icon"></span>
+                            <span>검색</span>
+                            <button style="display:none" type="submit"></button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="right_icons">
+                    <a href="{% url 'post:post-new' %}">
+                        <div class="sprite_camera_icon"></div>
+                    </a>
+                    <a href="{% url 'post-all' %}">
+                        <div class="sprite_compass_icon"></div>
+                    </a>
+                    <a href="#">
+                        <div class="sprite_heart_icon_outline"></div>
+                    </a>
+                    <a href="{% url 'profile' user.id %}">
+                        <div class="sprite_user_icon_outline"></div>
+                    </a>
+                    <a href="{% url 'account_logout' %}">
+                        <div class="sprite_unlock_icon"></div>
+                    </a>
+                </div>
+            </section>
+        </header>
+    </section>
+{% else %}
+    <header id="header">
+        <section class="h_inner">
+            <h1 class="logo">
+                <div OnClick="location.href ='{% url 'account_login' %}'" style="cursor:pointer;" class="sprite_write_logo"></div>
+            </h1>
+        </section>
+    </header>
+{% endif %}
+
+
+{% endblock header %}

@@ -1,0 +1,215 @@
+{% extends "../post_base/base_with_header.html" %}
+
+{% block title %}메인페이지 | Sparkling Coffee Club{% endblock title %}
+{% block index-style %}
+    <style>
+        .comment_field {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+{% endblock index-style %}
+
+
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <section id="container">
+            <div class="hidden_menu">
+                <div class="scroll_inner">
+                    {% for user in users %}
+                        <div class="user">
+                            <div class="thumb_img">
+                                <a href="{% url 'profile' user.id %}">
+                                    <img src="{{ user.profile_image.url }}" alt="프로필사진">
+                                </a>
+                            </div>
+                            <div class="id">{{ user.username }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <section id="main_container">
+                <div class="inner">
+                    <div class="contents_box">
+                        {% if latest_following_post %}
+                            {% for post in latest_following_post %}
+                                <article class="contents">
+                                    <header class="top">
+                                        <div class="user_container">
+                                            <div class="profile_img">
+                                                <a href="{% url 'profile' post.author.id %}">
+                                                    <img src="{{ post.author.profile_image.url }}" alt="프로필이미지">
+                                                </a>
+                                            </div>
+                                            <div class="user_name">
+                                                <div class="nick_name m_text">{{post.author.username}}</div>
+                                                <div class="country s_text">{{post.author.email}}</div>
+                                            </div>
+                                        </div>
+                                        {% if post.author == user %}
+                                            <div class="sprite_more_icon" data-name="more">
+                                                <ul class="toggle_box">
+                                                    <li>
+                                                        <a href="{% url 'post-update' post.id %}">수정</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{% url 'post-delete' post.id %}">삭제</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </header>
+
+                                    <div class="img_section">
+                                        <div class="trans_inner">
+                                            <div><img src="{{ post.image.url }}" alt="visual01"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bottom_icons" >
+                                        <div class="left_icons" style="width:100px;">
+                                            <form action="{% url 'process-like' post_ctype_id post.id %}" method="post" id='like_icon' style="display: flex; justify-content: space-between; align-items: center;">
+                                                {% csrf_token %}
+                                                {% if post.likes.all %}
+                                                    <button type="submit" class="sprite_heart_icon_outline on" data-name="heartbeat"></button>
+                                                {% else %}
+                                                    <button type="submit" class="sprite_heart_icon_outline" data-name="heartbeat"></button>
+                                                {% endif %}
+                                                <a href="{% url 'post-detail' post.id %}"><div class="sprite_bubble_icon" style="margin-left:10px; float:right;"></div></a>
+                                            </form>
+                                        </div>
+                                        <div class="right_icon">
+                                            <div class="sprite_bookmark_outline" data-name="bookmark"></div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="likes m_text">
+                                        좋아요
+                                        <span id="like-count-39">
+                                            {{ post.likes.count }}</span>
+                                        <span id="bookmark-count-39"></span>
+                                        개
+                                    </div>
+                                    <div class="comment_all">
+                                        <a href="{% url 'post-detail' post.id %}" style="color: gray;">댓글 모두 보기</a>
+                                    </div>
+                                    <div class="comment_container">
+                                        <div class="comment" id="comment-list-ajax-post37">
+                                            <div class="comment-detail">
+                                                <div class="nick_name m_text">{{ post.author.username }}</div>
+                                                <div>{{ post.content }}</div>
+                                                <div class="nick_name m_text">{{ comment.author.username }}</div>
+                                                <div>{{ comment.content }}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="timer">{{ post.created_at }}</div>
+
+                                    <form
+                                        class="comment-create-form"
+                                        action="{% url 'comment-create' post.id %}"
+                                        method="post">
+                                        {% csrf_token %}
+                                        <div class="comment_field" style="height: 20px; font-size: 13px;">
+                                            {% comment %} {{ form.content |attr:"placeholder:댓글 달기..."}} {% endcomment %}
+                                            <button
+                                                type="submit"
+                                                style=" border: none; background:none; float:right; font-size : 13px; color: skyblue">게시</button>
+                                        </div>
+                                    </form>
+                                </article>
+                            {% endfor %}
+                        {% else %}
+                        <div style="display: flex; flex-direction: column; align-items: center; margin: 80px 300px 0px 0px;">
+                            <div class ="sprite_follow_icon"></div>
+                            <div style="margin-top: 20px; font-size: 20px;">
+                                팔로우를 추가해주세요
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    <input type="hidden" id="page" value="1">
+
+                    <div class="side_box">
+                        <div class="user_profile">
+                            <div class="profile_thumb">
+                                <a href='#'>
+                                    <img src="{{ user.profile_image.url }}" alt="프로필사진">
+                                </a>
+                            </div>
+                            <div class="detail">
+                                <div class="id m_text">{{user.username}}</div>
+                                <div class="ko_name">{{user}}</div>
+                            </div>
+                        </div>
+                        <p>
+                            <article class="recommend">
+                                <header class="reco_header">
+                                    <div>회원님을 위한 추천</div>
+                                    <a href="#">모두 보기</a>
+                                </header>
+                                <div class="scroll_inner">
+                                    {% for u in users %}
+                                    {% if u != user and user not in u.followers.all %}
+                                    <div class="thumb_user" style="display: flex; flex-direction: row; justify-content: space-between;">
+                                        <div style="display: flex; align-content: center;">
+                                            <div class="profile_thumb">
+                                                <a href="{% url 'profile' u.id %}">
+                                                    <img src="{{ u.profile_image.url }}" alt="프로필사진">
+                                                </a>
+                                            </div>
+                                            <div class="detail">
+                                                <div class="id">{{u.username}}</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <form
+                                                class="follow-button"
+                                                action="{% url 'process-follow' u.id %}"
+                                                method="post">
+                                                {% csrf_token %}
+                                                {% if u in user.following %}
+                                                    <button class="btn btn-link" style="text-decoration: none; border: 0.5px solid lightgray; font-size: 13px; color: black;" type="submit">
+                                                        언팔로우
+                                                    </button>
+                                                {% else %}
+                                                    <button class="btn btn-link" style="font-size: 13px; text-decoration: none;" type="submit">
+                                                        팔로우
+                                                    </button>
+                                                {% endif %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </article>
+                        </p>
+                    </div>
+                </section>
+            </section>
+        {% else %}
+            <div id="main_container">
+                <div class="form_container ">
+                    <div class="form">
+                        <div class="sign_up_text">
+                            <br>
+                            <p>시작하려면 로그인이 필요합니다.
+                            </p>
+                            <a class="sign_user_btn_color" href="{% url " account_login"%}">로그인</a>
+                            <a class="sign_user_btn_color" href="{% url " account_signup"%}">회원가입</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

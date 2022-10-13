@@ -1,0 +1,40 @@
+{% extends "../post_base/base_with_header.html" %}
+
+{% block title %}
+    모든 포스트 | Sparkling Coffee Club{% endblock title %}
+
+
+{% load static %}
+
+{% block content %}
+    <div id="main_container">
+        <section class="b_inner">
+            <div class="hori_cont">
+                <div class="mylist_contents contents_container active">
+                    {% if posts %}
+                        {% for post in posts %}
+                            {% comment %} <div class="pic" style="width: 300px; height: 300px;">
+                                <a href="{{ posts.id}}"><img src="{{ post.image.url }}" alt=""></a>
+                            </div> {% endcomment %}
+                            <div style="border:solid 1px #CCCCCC;width:500px;word-break:break-all;">
+                                <span style="font-size: small">{{ post.content }}</span>
+                                <div style="text-align: right">
+                                    <hr>
+                                    <span style="font-size: small">{{ post.author.username }}-{{ post.created_at|timesince }} 전</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                            <div
+                                style="display: flex; flex-direction: column; align-items: center; margin: auto;">
+                                <div class="sprite_post_camera_icon"></div>
+                                <div style="margin-top: 10px;">
+                                    게시물을 추가해주세요
+                                </div>
+                            </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}

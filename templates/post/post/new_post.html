@@ -1,0 +1,54 @@
+{% extends "../post_base/base_with_header.html" %}
+
+
+{% block title %}
+    {% if post %} 
+        {{user.username}} 피드 수정
+    {% else %}
+        새 피드 작성
+    {% endif %} | Sparkling Coffee Club
+{% endblock title %}
+
+{% block content %}
+    <section id="container">
+        <div id="main_container">
+            <div class="post_form_container">
+                <form class="post_form" method="post" autocomplete="off" enctype="multipart/form-data" >{% csrf_token %}
+                    <div class="title">
+                        NEW POST
+                    </div>
+                    <div class="preview">
+                        <div class="upload">
+                            <div class="post_btn">
+                                <div class="plus_icon">
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                    <p>포스트 이미지 추가</p>
+                                <canvas id="imageCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    {% comment %} <p>                        
+                        {{ form.image|attr:"name:photo"|attr:"id:id_photo"|attr:"required:required"|add_error_class:"error" }}
+                    {% for error in form.image.errors %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor%}                        
+                    </p> {% endcomment %}
+                    <p>
+                        <form class="input-group mb-3" action="/post/{{ post.id }}" method="post">
+                            {% csrf_token %}
+                            <input type="text" style="width:230px;height:150px;" class="content" id='my-content' name='my-content' placeholder="140자 까지 등록 가능합니다. #태그명 을 통해서 검색 태그를 등록할 수 있습니다. 예시 : I # love # insta!">
+                            {% for error in form.title.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor%}
+                            <button class="btn btn-outline-secondary" type="submit">저장</button>
+                        </form>
+                        <hr>
+                    </P>
+
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

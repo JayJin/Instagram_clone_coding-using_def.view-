@@ -1,0 +1,45 @@
+{% extends "post_base/base_with_header.html" %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}프로필 설정 | Sparkling Coffee Club {% endblock title %}
+
+{% block content %}
+<div id="main_container">
+<div class="account-background">
+  <main class="profile-form">
+    <p class="welcome-message">
+      {{user.username}}님 환영합니다! <strong>프로필</strong>을 작성해주세요.
+    </p>
+    <form method="post" enctype="multipart/form-data" autocomplete="off">
+      {% csrf_token %}
+      <div class="profile">
+        <div class="profile-pic cp-avatar large" style="background-image: url('{{ user.profile_image.url }}')"></div>
+        <div class="file">
+          {{ form.profile_image }}
+        </div>
+      </div>
+      {% comment %} form으로 받아오려면 필드에 정의했던 것들을 template에서 써줘야한다. 그래야 데이터가 전송이 된다. 
+      처음부터 데이터베이스를 생각 없이 짠 것이 화근이 된 것 같다. 일단 display:none으로 화면에서만 안보이게 했다 {% endcomment %}
+      <div class="content" style="display:none"> 
+        {{ form.username|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:자신을 소개해 주세요!" }}
+        {% for error in form.username.errors %}
+          <div class="error-message">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="content">
+        {{ form.intro|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:자신을 소개해 주세요!" }}
+        {% for error in form.intro.errors %}
+          <div class="error-message">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="buttons">
+        <button class="submit_btn" type="submit">완료</button>
+      </div>
+    </form>
+  </main>
+</div>
+</div>
+{% endblock content %}
+  
