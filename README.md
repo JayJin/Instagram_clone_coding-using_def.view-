@@ -30,7 +30,7 @@ https://bolder-starburst-a73.notion.site/06b32514c6434ec1845ef249066a22df
 
 
 ## ****🎯 데이터베이스****
-![ex_screenshot](./img/erd.png)
+![ex_screenshot](./img/erd2.png)
 
 
 ## ****🎨 API 설계****
