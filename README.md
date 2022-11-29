@@ -34,5 +34,5 @@ https://bolder-starburst-a73.notion.site/06b32514c6434ec1845ef249066a22df
 
 
 ## ****🎨 API 설계****
-![ex_screenshot](./img/api1.PNG)
-![ex_screenshot](./img/api2.PNG)
+![ex_screenshot](./img/api1.png)
+![ex_screenshot](./img/api2.png)
